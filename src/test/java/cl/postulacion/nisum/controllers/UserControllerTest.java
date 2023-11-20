@@ -15,11 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -114,5 +116,30 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody()).isEqualTo(alex);
+    }
+    @Test
+    public void createUser() throws Exception{
+        Set<Phone> phonesA = new HashSet<>();
+        phonesA.add(new Phone("123123", "7", "52"));
+        phonesA.add(new Phone("123321", "6", "53"));
+
+
+        User alex = new User("Alex Soto", "asoto@gmail.com", "A123qwe", phonesA);
+
+        this.mockMvc.perform( MockMvcRequestBuilders
+                        .post("/user/create")
+                        .content(asJsonString(alex))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").exists());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
