@@ -13,6 +13,7 @@
 
 * Descargar respositorio : git clone https://github.com/AlexxSome/ejercicio-nisum.git
 * Ejecutar via IDE o terminal: gradle bootRun
+* Swagger: http://localhost:8080/swagger-ui/index.html
 * No es necesario ejecutar un sql, creacion de BD y carga de datos al iniciar la aplicacion
 * Probar endpoint via postman: localhost:8080/user/list
 
