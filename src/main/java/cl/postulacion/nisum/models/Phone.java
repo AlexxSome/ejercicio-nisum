@@ -3,6 +3,7 @@ package cl.postulacion.nisum.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "phones", schema = "public")
@@ -71,5 +72,29 @@ public class Phone {
 
     public void setContrycode(String contrycode) {
         this.contrycode = contrycode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Phone phone = (Phone) o;
+        return Objects.equals(id, phone.id) && Objects.equals(number, phone.number) && Objects.equals(citycode, phone.citycode) && Objects.equals(contrycode, phone.contrycode) && Objects.equals(user, phone.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, number, citycode, contrycode, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", citycode='" + citycode + '\'' +
+                ", contrycode='" + contrycode + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

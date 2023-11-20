@@ -23,7 +23,9 @@ public class LoadData {
 
 
         User alex = new User("Alex Soto", "asoto@gmail.com", "A123qwe", phonesA);
+        User alex2 = new User("Alex 2", "aso2@gmail.com", "A123qwe", phonesA);
         userService.createUser(alex);
+        userService.createUser(alex2);
 
     }
 }
